@@ -75,7 +75,49 @@ header {
     margin-top: 100px;
 }
 
+#content-wrap .menu {
+    height: 77px;
+    text-align: center;
+    border-bottom: 1px solid #3c4649;
+}
 
+#content-wrap .menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#content-wrap .menu ul li {
+    display: inline-block;
+    padding-top: 30px;
+    margin-right: 25px;
+}
+
+#content-wrap .menu ul li a {
+    text-transform: uppercase;
+    color: #cbbe91;
+    padding: 0px 20px;
+}
+
+#content-wrap .menu ul li .button {
+    padding: 5px 10px;
+    background-color: #42331a;
+    border: 1px solid rgb(202, 119, 23);
+}
+
+#content-wrap .container {
+    margin: 50px auto;
+    width: 808px;
+    border: 1px solid black;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#box {
+    height: 300px;
+    width: 200px;
+    border: 1px solid white;
+}
 
 .footer-wrapper {
     display: flex;
