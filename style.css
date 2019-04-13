@@ -47,7 +47,7 @@ a {
 }
 
 #nap:hover, #login:hover {
-    opacity: 0.9;
+    opacity: 0.5;
 }
 
 #nap {
@@ -89,34 +89,85 @@ header {
 
 #content-wrap .menu ul li {
     display: inline-block;
-    padding-top: 30px;
+    padding-top: 25px;
     margin-right: 25px;
 }
 
-#content-wrap .menu ul li a {
+#content-wrap .menu ul li button {
+    border: none;
+    background: none;
     text-transform: uppercase;
     color: #cbbe91;
     padding: 0px 20px;
 }
 
-#content-wrap .menu ul li .button {
+#content-wrap .menu ul li .pay {
     padding: 5px 10px;
     background-color: #42331a;
     border: 1px solid rgb(202, 119, 23);
+    display: flex;
+    justify-content: center;
+}
+
+#content-wrap .menu ul li .pay img{
+    height: 15px;
+    width: 15px;
+    margin-right: 10px;
 }
 
 #content-wrap .container {
     margin: 50px auto;
     width: 808px;
-    border: 1px solid black;
+    border: none;
     display: flex;
     flex-wrap: wrap;
 }
 
 #box {
+    position: relative;
     height: 300px;
     width: 200px;
     border: 1px solid white;
+}
+
+#costTable {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background-color: black;
+    opacity: 0.5;
+    display: flex;
+    justify-content: space-around;
+}
+
+#costRPTable {
+    height: 100%;
+    width: 50%;
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: center;
+}
+
+#costIPTable {
+    height: 100%;
+    width: 50%;
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: center;
+}
+
+#cost {
+    color: white;
+    transform: translateY(25%);
+}
+
+#image {
+    height: 50%;
+    width: 25%;
+    margin-right: 10px;
 }
 
 .footer-wrapper {
