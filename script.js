@@ -55,7 +55,7 @@ function drawGrid(gridTotal, championOrSkin) {
 
         costIP = document.createElement('div');
         costIP.setAttribute('id', 'cost');
-        costIP.textContent = '200';
+        costIP.textContent = '6300';
 
         ipTable.appendChild(costIP);
 
