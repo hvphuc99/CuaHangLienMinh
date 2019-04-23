@@ -4,7 +4,7 @@ const champions = document.querySelector('.champions');
 let gridTotal = 20;
 
 //Ham nay de ve cac o chua cac tuong hoac trang phuc
-function drawGrid(gridTotal) {
+function drawGrid(gridTotal, championOrSkin) {
     let remainder = gridTotal % 4;
     if (remainder != 0)
         gridTotal = gridTotal + 4 - remainder; /*Cong them de so o luc nay la so chia het cho 4 de
@@ -18,22 +18,11 @@ function drawGrid(gridTotal) {
         div.setAttribute('id', 'box');
         gridContainer.appendChild(div);
     }
-}
 
-//Xoa cac o chua cac tuong hoac trang phuc
-function deleteGrid() {
-    const grid = document.querySelectorAll('#box');
-    grid.forEach((box) => {
-        grid.parentNode.removeChild(box);
-    })
-}
-
-function drawChampions(gridTotal) {
-    drawGrid(gridTotal);
-    let img = new Array(5);
+    let img = new Array(gridTotal);
     for (i = 0; i < gridTotal; i++) {
         img[i] = new Image();
-        img[i].src = 'Images/image' + `${i+1}` + '.jpg';
+        img[i].src = 'Images/' + `${championOrSkin}` + '/image' + `${i+1}` + '.jpg';
         img[i].style.height = '100%';
         img[i].style.width = '100%';
     }
@@ -79,16 +68,37 @@ function drawChampions(gridTotal) {
     }
 }
 
+//Xoa cac o chua cac tuong hoac trang phuc
+function deleteGrid() {
+    let boxes = document.querySelectorAll('#box');
+    boxes.forEach((box) => {
+        box.parentNode.removeChild(box);
+    })
+}
+
+function drawChampions() {
+    gridTotal = 20;
+    drawGrid(gridTotal, "champions");
+}
+
+function drawSkins() {
+    gridTotal = 46;
+    drawGrid(gridTotal, "skins");
+}
+
 skins.addEventListener('click', ()=> {
+    deleteGrid();
+    drawSkins();
     skins.style.opacity = "0.5";
     champions.style.opacity = "1";
 })
 
 champions.addEventListener('click', ()=> {
     deleteGrid();
-    drawChampions(gridTotal);
+    drawChampions();
     champions.style.opacity = "0.5";
+    skins.style.opacity = "1";
 })
 
 champions.style.opacity = "0.5";
-drawChampions(gridTotal);
+drawChampions();
