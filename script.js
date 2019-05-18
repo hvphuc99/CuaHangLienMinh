@@ -1,18 +1,23 @@
 const gridContainer = document.querySelector('.container');
 const skins = document.querySelector('.skins');
 const champions = document.querySelector('.champions');
+const history = document.querySelector('.history');
+const pay = document.querySelector('.pay');
 let gridTotal = 20;
+let flagHis = 0; //kiem tra xem da ve bang lich su hay chua
+let flagPay = 0; //kiem tra xem da ve bang thanh toan hay chua
 
 //Ham nay de ve cac o chua cac tuong hoac trang phuc
-function drawGrid(gridTotal, championOrSkin) {
-    let remainder = gridTotal % 4;
+function drawGridCAS(gridTotal, championOrSkin) {
+    gridContainer.style.flexWrap = "wrap";
+    let remainder = gridTotal % 5;
     if (remainder != 0)
-        gridTotal = gridTotal + 4 - remainder; /*Cong them de so o luc nay la so chia het cho 4 de
+        gridTotal = gridTotal + 5 - remainder; /*Cong them de so o luc nay la so chia het cho 4 de
                                             lay chinh xac chieu cao khung container can xac dinh */
-    let numberOfRow = gridTotal / 4;
-    gridContainer.style.height = `${300 * numberOfRow + numberOfRow * 2}px`;
+    let numberOfRow = gridTotal / 5;
+    gridContainer.style.height = `${300 * numberOfRow + numberOfRow * 20}px`;
     if (remainder != 0)
-        gridTotal = gridTotal - (4 - remainder); /*Hoan tra lai gia tri that cho tong so o */
+        gridTotal = gridTotal - (5 - remainder); /*Hoan tra lai gia tri that cho tong so o */
     for (i = 0; i < gridTotal; i++) {
         div = document.createElement('div');
         div.setAttribute('id', 'box');
@@ -78,26 +83,197 @@ function deleteGrid() {
 
 function drawChampions() {
     gridTotal = 20;
-    drawGrid(gridTotal, "champions");
+    drawGridCAS(gridTotal, "champions");
 }
 
 function drawSkins() {
     gridTotal = 46;
-    drawGrid(gridTotal, "skins");
+    drawGridCAS(gridTotal, "skins");
+}
+
+//Ham nay de ve bang lich su
+function drawHistoryTable() {
+    //Tao khung cho bang 
+    gridContainer.style.height = '500px';
+    gridContainer.style.border = '2px solid #785a28';
+    gridContainer.style.flexDirection = "row-reverse";
+
+    //Ve cot the hien gia
+    const costColumn = document.createElement('div');
+    costColumn.setAttribute('id', 'costAndDateColumn');
+    gridContainer.appendChild(costColumn);
+
+    //Ve cot the hien ngay mua
+    const dateColumn = document.createElement('div');
+    dateColumn.setAttribute('id', 'costAndDateColumn');
+    gridContainer.appendChild(dateColumn);
+
+    //Ve cot the hien thong tin va tuong hoac trang phuc
+    const ChamOrSkinColumn = document.createElement('div');
+    ChamOrSkinColumn.setAttribute('id', 'InfoChamOrSkin');
+    ChamOrSkinColumn.style.width = '780px';
+    gridContainer.appendChild(ChamOrSkinColumn);
+
+    //Ve 1 dong cho tung cot thong tin tuong hoac trang phuc, ngay mua va gia
+    const row1Info = document.createElement('div');
+    row1Info.setAttribute('id', 'createRow');
+    row1Info.style.borderBottom = '2px solid #785a28';
+    row1Info.textContent = "Tướng / Trang Phục";
+    
+    ChamOrSkinColumn.appendChild(row1Info);
+    
+    const row1Date = document.createElement('div');
+    row1Date.setAttribute('id', 'createRow');
+    row1Date.textContent = "Ngày Mua";
+    row1Date.style.borderBottom = '2px solid #785a28';
+    dateColumn.appendChild(row1Date);
+
+    const row1Cost = document.createElement('div');
+    row1Cost.setAttribute('id', 'createRow');
+    row1Cost.textContent = "Giá";
+    row1Cost.style.borderBottom = '2px solid #785a28';
+    costColumn.appendChild(row1Cost);
+}
+
+//Xoa bang lich su
+function deleteHisTab() {
+    costColumn = document.querySelector('#costAndDateColumn');
+    costColumn.parentNode.removeChild(costColumn);
+
+    dateColumn = document.querySelector('#costAndDateColumn');
+    dateColumn.parentNode.removeChild(dateColumn);
+
+    ChamOrSkinColumn = document.querySelector('#InfoChamOrSkin');
+    ChamOrSkinColumn.parentNode.removeChild(ChamOrSkinColumn);
+
+    gridContainer.style.height = null;
+    gridContainer.style.border = null;
+    gridContainer.style.flexDirection = null;
+
+}
+
+//Ham nay de ve bang thanh toan
+function drawPayTable() {
+    //Tao khung cho bang 
+    gridContainer.style.height = '500px';
+    gridContainer.style.border = '2px solid #785a28';
+    gridContainer.style.flexDirection = "row-reverse";
+
+    //Tao cot the hien gia
+    costColumn = document.createElement('div');
+    costColumn.setAttribute('id', 'costAndDateColumn');
+    costColumn.style.position = "relative";
+    gridContainer.appendChild(costColumn);
+
+    //Tao cot the hien ten tuong hoac trang phuc
+    ChamOrSkinColumn = document.createElement('div');
+    ChamOrSkinColumn.setAttribute('id', 'InfoChamOrSkin');
+    ChamOrSkinColumn.style.width = '950px';
+    ChamOrSkinColumn.style.position = "relative";
+    gridContainer.appendChild(ChamOrSkinColumn);
+
+    //Ve 1 dong cho tung cot thong tin tuong hoac trang phuc va gia
+    row1Info = document.createElement('div');
+    row1Info.setAttribute('id', 'createRow');
+    row1Info.textContent = "Tướng / Trang Phục";
+    row1Info.style.borderBottom = '2px solid #785a28';
+    ChamOrSkinColumn.appendChild(row1Info);
+
+    row1Cost = document.createElement('div');
+    row1Cost.setAttribute('id', 'createRow');
+    row1Cost.textContent = "Giá";
+    row1Cost.style.borderBottom = '2px solid #785a28';
+    costColumn.appendChild(row1Cost);
+
+    const rowSum = document.createElement('div');
+    rowSum.setAttribute('id', 'createRow');
+    rowSum.style.bottom = '0';
+    rowSum.style.position = "absolute";
+    rowSum.style.borderTop = '2px solid #785a28';
+    rowSum.textContent = "Tổng";
+    ChamOrSkinColumn.appendChild(rowSum);
+
+    const rowSumCost = document.createElement('div');
+    rowSumCost.setAttribute('id', 'createRow');
+    rowSumCost.style.bottom = '0';
+    rowSumCost.style.position = "absolute";
+    rowSumCost.style.borderTop = '2px solid #785a28';
+    costColumn.appendChild(rowSumCost);
+}
+
+function deletePayTable() {
+    costColumn = document.querySelector('#costAndDateColumn');
+    costColumn.parentNode.removeChild(costColumn);
+
+    ChamOrSkinColumn = document.querySelector('#InfoChamOrSkin');
+    ChamOrSkinColumn.parentNode.removeChild(ChamOrSkinColumn);
+
+    gridContainer.style.height = null;
+    gridContainer.style.border = null;
+    gridContainer.style.flexDirection = null;
+
 }
 
 skins.addEventListener('click', ()=> {
+    if (flagHis == 1) {
+        deleteHisTab();
+        flagHis = 0;
+    }
+    if (flagPay == 1) {
+        deletePayTable();
+        flagPay = 0;
+    }
     deleteGrid();
     drawSkins();
     skins.style.opacity = "0.5";
     champions.style.opacity = "1";
+    history.style.opacity = "1";
+    pay.style.opacity = "1";
 })
 
 champions.addEventListener('click', ()=> {
+    if (flagHis == 1) {
+        deleteHisTab();
+        flagHis = 0;
+    }
+    if (flagPay == 1) {
+        deletePayTable();
+        flagPay = 0;
+    }
     deleteGrid();
     drawChampions();
     champions.style.opacity = "0.5";
     skins.style.opacity = "1";
+    history.style.opacity = "1";
+    pay.style.opacity = "1";
+})
+
+history.addEventListener('click',()=> {
+    if (flagPay == 1) {
+        deletePayTable();
+        flagPay = 0;
+    }
+    deleteGrid();
+    drawHistoryTable();
+    history.style.opacity = "0.5";
+    champions.style.opacity = "1";
+    skins.style.opacity = "1";
+    pay.style.opacity = "1";
+    flagHis = 1;
+})
+
+pay.addEventListener('click', ()=> {
+    if (flagHis == 1) {
+        deleteHisTab();
+        flagHis = 0;
+    }
+    deleteGrid();
+    drawPayTable();
+    pay.style.opacity = "0.5";
+    history.style.opacity = "1";
+    champions.style.opacity = "1";
+    skins.style.opacity = "1";
+    flagPay = 1;
 })
 
 champions.style.opacity = "0.5";
