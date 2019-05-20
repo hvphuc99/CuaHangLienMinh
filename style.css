@@ -46,6 +46,18 @@ a {
     cursor: pointer;
 }
 
+#payButton {
+    height: 40px;
+    width: 150px;
+    background-color: #785a28;
+    color: white;
+    font-size: 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 40px 0px;
+}
+
 #nap:hover, #login:hover {
     opacity: 0.5;
 }

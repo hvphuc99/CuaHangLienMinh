@@ -158,6 +158,8 @@ function drawPayTable() {
     gridContainer.style.height = '500px';
     gridContainer.style.border = '2px solid #785a28';
     gridContainer.style.flexDirection = "row-reverse";
+    gridContainer.style.marginBottom = '100px';
+    gridContainer.style.justifyContent = 'center';
 
     //Tao cot the hien gia
     costColumn = document.createElement('div');
@@ -199,6 +201,11 @@ function drawPayTable() {
     rowSumCost.style.position = "absolute";
     rowSumCost.style.borderTop = '2px solid #785a28';
     costColumn.appendChild(rowSumCost);
+
+    const payButton = document.createElement('button');
+    payButton.setAttribute('id', 'payButton');
+    payButton.textContent = "Thanh toán";
+    gridContainer.appendChild(payButton);
 }
 
 function deletePayTable() {
@@ -208,28 +215,16 @@ function deletePayTable() {
     ChamOrSkinColumn = document.querySelector('#InfoChamOrSkin');
     ChamOrSkinColumn.parentNode.removeChild(ChamOrSkinColumn);
 
+    payButton = document.querySelector('#payButton');
+    payButton.parentNode.removeChild(payButton);
+
     gridContainer.style.height = null;
     gridContainer.style.border = null;
     gridContainer.style.flexDirection = null;
+    gridContainer.style.marginBottom = null;
+    gridContainer.style.justifyContent = null;
 
 }
-
-skins.addEventListener('click', ()=> {
-    if (flagHis == 1) {
-        deleteHisTab();
-        flagHis = 0;
-    }
-    if (flagPay == 1) {
-        deletePayTable();
-        flagPay = 0;
-    }
-    deleteGrid();
-    drawSkins();
-    skins.style.opacity = "0.5";
-    champions.style.opacity = "1";
-    history.style.opacity = "1";
-    pay.style.opacity = "1";
-})
 
 champions.addEventListener('click', ()=> {
     if (flagHis == 1) {
@@ -246,6 +241,25 @@ champions.addEventListener('click', ()=> {
     skins.style.opacity = "1";
     history.style.opacity = "1";
     pay.style.opacity = "1";
+    buySomeThing();
+})
+
+skins.addEventListener('click', ()=> {
+    if (flagHis == 1) {
+        deleteHisTab();
+        flagHis = 0;
+    }
+    if (flagPay == 1) {
+        deletePayTable();
+        flagPay = 0;
+    }
+    deleteGrid();
+    drawSkins();
+    skins.style.opacity = "0.5";
+    champions.style.opacity = "1";
+    history.style.opacity = "1";
+    pay.style.opacity = "1";
+    buySomeThing();
 })
 
 history.addEventListener('click',()=> {
@@ -274,7 +288,41 @@ pay.addEventListener('click', ()=> {
     champions.style.opacity = "1";
     skins.style.opacity = "1";
     flagPay = 1;
+    let button1 = document.querySelector('#payButton');
+    button1.addEventListener('click', ()=> {
+        notificationPay();
+    })
 })
+
+function notificationBuy() {
+    if (confirm('Bạn có chắc muốn thêm vào giỏ hàng không?')) {
+        alert('Đã thêm vào giỏ hàng');
+    }
+}
+
+function notificationPay() {
+    if (confirm('Bạn có chắc muốn thanh toán không?')) {
+        alert('Cảm ơn bạn đã mua hàng');
+    }
+}
+
+function buySomeThing() {
+    let RPButtons = document.querySelectorAll('#costRPTable');
+        RPButtons.forEach((RPButton) => {
+            RPButton.addEventListener('click', () => {
+                notificationBuy();
+            })
+        })
+
+    let IPButtons = document.querySelectorAll('#costIPTable');
+    IPButtons.forEach((IPButton) => {
+        IPButton.addEventListener('click', () => {
+            notificationBuy();
+        })
+    })
+}
 
 champions.style.opacity = "0.5";
 drawChampions();
+buySomeThing();
+    
